@@ -2,6 +2,9 @@
 
 namespace Gopaddi\PaddiHelper;
 
+use Gopaddi\PaddiHelper\Commands\MakeClassCommand;
+use Gopaddi\PaddiHelper\Commands\MakeEnumCommand;
+use Gopaddi\PaddiHelper\Commands\MakeMigrationCommand;
 use Gopaddi\PaddiHelper\Commands\PublishMigrationsCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
@@ -21,7 +24,7 @@ class SkeletonServiceProvider extends PackageServiceProvider
             ->hasConfigFile()
             ->hasViews()
             ->hasMigrations()
-            ->hasCommands([PublishMigrationsCommand::class]);
+            ->hasCommands([PublishMigrationsCommand::class, MakeMigrationCommand::class, MakeClassCommand::class, MakeEnumCommand::class]);
     }
 
     // public function bootingPackage()
@@ -31,25 +34,7 @@ class SkeletonServiceProvider extends PackageServiceProvider
 
     public function bootingPackage()
     {
-       $this->publishesMigrationsSafely();
-
-        // Hook into vendor:publish AFTER it runs
-        $this->app->afterResolving('command.vendor.publish', function ($command) {
-            $command->getOutput()->writeln('');
-            $command->getOutput()->writeln('<info>Juggernaut Migration Summary:</info>');
-
-            $published = cache('juggernaut.published_migrations', []);
-
-            if (empty($published)) {
-                $command->getOutput()->writeln('<comment>No new migrations were published.</comment>');
-            } else {
-                foreach ($published as $file) {
-                    $command->getOutput()->writeln("<info>✔ {$file}</info>");
-                }
-            }
-
-            cache()->forget('juggernaut.published_migrations');
-        });
+        $this->publishesMigrationsSafely();
     }
 
     protected function publishesMigrationsSafely()
@@ -69,8 +54,6 @@ class SkeletonServiceProvider extends PackageServiceProvider
                 $published[] = $filename;
             }
         }
-
-        cache(['juggernaut.published_migrations' => $published], now()->addMinutes(5));
     }
 
 

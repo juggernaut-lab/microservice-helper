@@ -1,0 +1,8 @@
+<?php
+
+namespace {{namespace}};
+
+enum {{enum}}: string
+{
+// Add cases e.g. case ACTIVE = 'active';
+}
