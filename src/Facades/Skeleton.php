@@ -1,16 +1,16 @@
 <?php
 
-namespace VendorName\Skeleton\Facades;
+namespace Gopaddi\PaddiHelper\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @see \VendorName\Skeleton\Skeleton
+ * @see \Gopaddi\PaddiHelper\Skeleton
  */
 class Skeleton extends Facade
 {
     protected static function getFacadeAccessor(): string
     {
-        return \VendorName\Skeleton\Skeleton::class;
+        return \Gopaddi\PaddiHelper\Skeleton::class;
     }
 }

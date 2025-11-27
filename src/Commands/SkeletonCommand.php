@@ -1,6 +1,7 @@
 <?php
 
-namespace VendorName\Skeleton\Commands;
+
+namespace Gopaddi\PaddiHelper\Commands;
 
 use Illuminate\Console\Command;
 

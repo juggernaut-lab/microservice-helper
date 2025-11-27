@@ -1,5 +1,10 @@
 <?php
 
-namespace VendorName\Skeleton;
+namespace Gopaddi\PaddiHelper;
 
-class Skeleton {}
+class Skeleton {
+
+    public function helloWorld(): string {
+        return "Hello, World!";
+    }
+}

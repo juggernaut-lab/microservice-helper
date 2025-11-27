@@ -1,6 +1,6 @@
 <?php
 
-namespace VendorName\Skeleton\Database\Factories;
+namespace Gopaddi\PaddiHelper\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 

@@ -1,10 +1,10 @@
 <?php
 
-namespace VendorName\Skeleton\Tests;
+namespace Gopaddi\PaddiHelper\Tests;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Orchestra\Testbench\TestCase as Orchestra;
-use VendorName\Skeleton\SkeletonServiceProvider;
+use Gopaddi\PaddiHelper\SkeletonServiceProvider;
 
 class TestCase extends Orchestra
 {
