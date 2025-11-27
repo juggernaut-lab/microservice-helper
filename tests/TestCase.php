@@ -3,8 +3,8 @@
 namespace JuggernautLab\MicroserviceHelper\Tests;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Orchestra\Testbench\TestCase as Orchestra;
 use JuggernautLab\MicroserviceHelper\SkeletonServiceProvider;
+use Orchestra\Testbench\TestCase as Orchestra;
 
 class TestCase extends Orchestra
 {

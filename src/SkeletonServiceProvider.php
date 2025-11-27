@@ -8,7 +8,6 @@ use JuggernautLab\MicroserviceHelper\Commands\MakeMigrationCommand;
 use JuggernautLab\MicroserviceHelper\Commands\PublishMigrationsCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use JuggernautLab\MicroserviceHelper\Commands\SkeletonCommand;
 
 class SkeletonServiceProvider extends PackageServiceProvider
 {
@@ -39,7 +38,7 @@ class SkeletonServiceProvider extends PackageServiceProvider
 
     protected function publishesMigrationsSafely()
     {
-        $migrations = glob(__DIR__ . '/../database/migrations/*.php');
+        $migrations = glob(__DIR__.'/../database/migrations/*.php');
         $published = [];
 
         foreach ($migrations as $migration) {
@@ -55,9 +54,4 @@ class SkeletonServiceProvider extends PackageServiceProvider
             }
         }
     }
-
-
-
 }
-
-

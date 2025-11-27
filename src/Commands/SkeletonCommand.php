@@ -1,6 +1,5 @@
 <?php
 
-
 namespace JuggernautLab\MicroserviceHelper\Commands;
 
 use Illuminate\Console\Command;

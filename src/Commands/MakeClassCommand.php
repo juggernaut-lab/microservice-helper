@@ -26,19 +26,19 @@ class MakeClassCommand extends Command
         $name = Str::studly($this->argument('name'));
         $sub = trim($this->option('namespace') ?? '', '\\/ ');
 
-        $dir = __DIR__ . '/../../src';
+        $dir = __DIR__.'/../../src';
         $ns = 'Gopaddi\\PaddiHelper';
 
         if ($sub) {
-            $dir .= '/' . str_replace('\\', '/', $sub);
-            $ns .= '\\' . str_replace('/', '\\', $sub);
+            $dir .= '/'.str_replace('\\', '/', $sub);
+            $ns .= '\\'.str_replace('/', '\\', $sub);
         }
 
         if (! is_dir($dir)) {
             mkdir($dir, 0755, true);
         }
 
-        $path = $dir . '/' . $name . '.php';
+        $path = $dir.'/'.$name.'.php';
 
         if ($this->files->exists($path)) {
             $this->error("Class already exists: {$path}");
@@ -46,7 +46,7 @@ class MakeClassCommand extends Command
             return Command::FAILURE;
         }
 
-        $stub = file_get_contents(__DIR__ . '/../../stubs/class.stub');
+        $stub = file_get_contents(__DIR__.'/../../stubs/class.stub');
         $stub = str_replace(['{{namespace}}', '{{class}}'], [$ns, $name], $stub);
 
         $this->files->put($path, $stub);

@@ -25,14 +25,14 @@ class MakeEnumCommand extends Command
     {
         $name = Str::studly($this->argument('name'));
 
-        $dir = __DIR__ . '/../../src/Enums';
+        $dir = __DIR__.'/../../src/Enums';
         $ns = 'Gopaddi\\PaddiHelper\\Enums';
 
         if (! is_dir($dir)) {
             mkdir($dir, 0755, true);
         }
 
-        $path = $dir . '/' . $name . '.php';
+        $path = $dir.'/'.$name.'.php';
 
         if ($this->files->exists($path)) {
             $this->error("Enum already exists: {$path}");
@@ -40,7 +40,7 @@ class MakeEnumCommand extends Command
             return Command::FAILURE;
         }
 
-        $stub = file_get_contents(__DIR__ . '/../../stubs/enum.stub');
+        $stub = file_get_contents(__DIR__.'/../../stubs/enum.stub');
         $stub = str_replace(['{{namespace}}', '{{enum}}'], [$ns, $name], $stub);
 
         $this->files->put($path, $stub);

@@ -24,7 +24,7 @@ class MakeMigrationCommand extends Command
         //     return Command::FAILURE;
         // }
 
-        $migrationPath = __DIR__ . '/../../database/migrations';
+        $migrationPath = __DIR__.'/../../database/migrations';
 
         $creator = app(MigrationCreator::class);
 
@@ -35,7 +35,7 @@ class MakeMigrationCommand extends Command
             $create
         );
 
-        $this->info("Migration created:");
+        $this->info('Migration created:');
         $this->line("  {$file}");
     }
 }

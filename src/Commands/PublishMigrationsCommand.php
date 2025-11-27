@@ -14,10 +14,10 @@ class PublishMigrationsCommand extends Command
     public function handle()
     {
         $this->info("\nPublishing Juggernaut migrations...");
-        $this->line("──────────────────────────────────────────");
+        $this->line('──────────────────────────────────────────');
 
-        $sourcePath = __DIR__ . '/../../database/migrations';
-        $migrationFiles = glob($sourcePath . '/*.php');
+        $sourcePath = __DIR__.'/../../database/migrations';
+        $migrationFiles = glob($sourcePath.'/*.php');
 
         $new = [];
         $existingCount = 0;
@@ -29,6 +29,7 @@ class PublishMigrationsCommand extends Command
 
             if (file_exists($target) && ! $this->option('force')) {
                 $existingCount++;
+
                 continue;
             }
 
@@ -40,11 +41,11 @@ class PublishMigrationsCommand extends Command
         // ───── SUMMARY OUTPUT ─────────────────────────────────
 
         $this->line("\nSummary:");
-        $this->line("──────────────────────────────────────────");
+        $this->line('──────────────────────────────────────────');
 
         $this->info("Total migrations in package:   {$total}");
         $this->info("Existing in project already:   {$existingCount}");
-        $this->info("Newly published migrations:    " . count($new));
+        $this->info('Newly published migrations:    '.count($new));
 
         if (count($new) > 0) {
             $this->line("\nNew migrations added:");
