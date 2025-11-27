@@ -1,10 +1,10 @@
 <?php
 
-namespace Gopaddi\PaddiHelper\Tests;
+namespace JuggernautLab\MicroserviceHelper\Tests;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Orchestra\Testbench\TestCase as Orchestra;
-use Gopaddi\PaddiHelper\SkeletonServiceProvider;
+use JuggernautLab\MicroserviceHelper\SkeletonServiceProvider;
 
 class TestCase extends Orchestra
 {

@@ -1,12 +1,12 @@
 <?php
 
-namespace Gopaddi\PaddiHelper\Commands;
+namespace JuggernautLab\MicroserviceHelper\Commands;
 
 use Illuminate\Console\Command;
 
 class PublishMigrationsCommand extends Command
 {
-    protected $signature = 'juggernaut:publish-migrations 
+    protected $signature = 'juggernaut:publish-migrations
                             {--force : Overwrite existing migration files}';
 
     protected $description = 'Publishes gopaddi shared package migrations safely with analytics.';

@@ -1,5 +1,5 @@
 <?php
 
-use Gopaddi\PaddiHelper\Tests\TestCase;
+use JuggernautLab\MicroserviceHelper\Tests\TestCase;
 
 uses(TestCase::class)->in(__DIR__);

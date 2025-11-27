@@ -1,6 +1,6 @@
 <?php
 
-namespace Gopaddi\PaddiHelper;
+namespace JuggernautLab\MicroserviceHelper;
 
 class Skeleton {
 

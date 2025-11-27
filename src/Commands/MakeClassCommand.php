@@ -1,6 +1,6 @@
 <?php
 
-namespace Gopaddi\PaddiHelper\Commands;
+namespace JuggernautLab\MicroserviceHelper\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;

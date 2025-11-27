@@ -1,6 +1,6 @@
 <?php
 
-namespace Gopaddi\PaddiHelper\Facades;
+namespace JuggernautLab\MicroserviceHelper\Facades;
 
 use Illuminate\Support\Facades\Facade;
 

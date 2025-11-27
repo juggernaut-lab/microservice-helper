@@ -1,6 +1,6 @@
 <?php
 
-namespace Gopaddi\PaddiHelper\Database\Factories;
+namespace JuggernautLab\MicroserviceHelper\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 

@@ -1,14 +1,14 @@
 <?php
 
-namespace Gopaddi\PaddiHelper;
+namespace JuggernautLab\MicroserviceHelper;
 
-use Gopaddi\PaddiHelper\Commands\MakeClassCommand;
-use Gopaddi\PaddiHelper\Commands\MakeEnumCommand;
-use Gopaddi\PaddiHelper\Commands\MakeMigrationCommand;
-use Gopaddi\PaddiHelper\Commands\PublishMigrationsCommand;
+use JuggernautLab\MicroserviceHelper\Commands\MakeClassCommand;
+use JuggernautLab\MicroserviceHelper\Commands\MakeEnumCommand;
+use JuggernautLab\MicroserviceHelper\Commands\MakeMigrationCommand;
+use JuggernautLab\MicroserviceHelper\Commands\PublishMigrationsCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Gopaddi\PaddiHelper\Commands\SkeletonCommand;
+use JuggernautLab\MicroserviceHelper\Commands\SkeletonCommand;
 
 class SkeletonServiceProvider extends PackageServiceProvider
 {

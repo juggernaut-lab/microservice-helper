@@ -1,18 +1,20 @@
-# Gopaddi / Paddi Helper (Juggernaut)
+# Juggernaut Lab — Laravel Microservice Helper
 
-A shared Laravel utility package designed to centralize core logic, schema definitions, enums, helpers, and developer tooling across multiple Laravel microservices.
+A Laravel toolkit engineered to help microservice teams centralize and synchronize shared database migrations, enums, helpers, scaffolding generators, and core logic across multiple Laravel applications.
 
-This package ensures:
+This package brings structure, consistency, and developer efficiency to multi-repo or multi-service Laravel environments.
 
-- Consistent database schema across services
-- Shared business logic (enums, services, helpers)
-- Unified scaffolding/boilerplate generation
-- Safe migration synchronization
-- Improved developer experience
-- Reduced code duplication
-- Predictable updates across teams
+## What It Solves
 
-This package is intended for internal use within the Gopaddi engineering ecosystem.
+- Prevents schema drift across microservices
+- Centralizes shared logic and reusable components
+- Provides internal scaffolding for rapid package updates
+- Enables safe and intelligent migration publishing
+- Ensures predictable changes across distributed apps
+- Eliminates duplication of enums, helpers, and domain classes
+- Provides a workflow and tooling model for collaborative teams
+
+Designed for engineering teams where multiple Laravel services depend on shared domain logic or a shared database.
 
 ---
 
@@ -34,39 +36,43 @@ This package is intended for internal use within the Gopaddi engineering ecosyst
 
 ## Overview
 
-The **Paddi Helper (Juggernaut)** package serves as a central foundation layer for all Gopaddi Laravel services. It provides:
+The **Juggernaut Lab — Laravel Microservice Helper** package acts as a foundational layer for multi-service Laravel ecosystems.
 
-- Shared database migrations
-- Reusable PHP classes
-- Shared enums and types
-- Tools to generate new package components
-- Safe migration publishing logic
-- A consistent workflow for multiple dev teams
-- Support for multi-service environments sharing the same database
+It centralizes:
+
+- Database migrations
+- Enums
+- Shared business logic
+- Scaffolding & code generation
+- Utilities and helper classes
+- Schema definitions
+- Internal developer tooling
+
+This ensures every service remains aligned, even when multiple teams contribute to shared domain concepts.
 
 ---
 
 ## Features
 
 ### ✔ Centralized Shared Migrations
-Ensures all services stay synced with one source of truth.
+One source of truth for database schema shared across multiple Laravel apps.
 
-### ✔ Safe Migration Publisher
-Publishes migrations from the package into each app without duplicating or overwriting files unless requested.
+### ✔ Smart Migration Publisher
+Publishes only new migrations to prevent duplication or corruption.
 
 ### ✔ Internal Scaffolding System
-Commands to generate:
+Generate shared components directly inside the package:
 
 - Migrations
 - Classes
 - Enums
-- Full “resource bundles”
+- Full “bundle” creation (migration + class + enum)
 
-### ✔ Symlink-Aware Development
-Automatically writes files into the actual package directory when installed in path-repository mode.
+### ✔ Symlink-Aware Package Development
+When installed via `path` repository, the package becomes editable in real time.
 
-### ✔ Multi-Service Ready
-Designed for teams where several Laravel apps share the same database.
+### ✔ Microservice-Ready Architecture
+Ideal for teams operating multiple Laravel services backed by a shared or partially shared database.
 
 ---
 
@@ -75,51 +81,96 @@ Designed for teams where several Laravel apps share the same database.
 Install via Composer:
 
 ```bash
-composer require gopaddi/paddi-helper 
+composer require juggernaut-lab/microservice-helper
 ```
 
-Then, publish the migrations:
-
-
-
-## Local Development (Symlink Mode)
-
-When symlinked, the package becomes editable in real time:
-
-- All generator commands write directly to the package directory  
-- No need to modify vendor code  
-- Changes are immediately commit-ready  
-- Perfect for contributors developing the package itself  
-
-This workflow is ideal when multiple developers collaborate on the shared package.
-
----
-
-## Migration Management
-
-All shared migrations live inside the package:
-To publish the package migrations into a Laravel application:
+Publish package migrations:
 
 ```bash
 php artisan juggernaut:publish-migrations
 ```
 
-### Publisher Behavior
+---
 
-The migration publisher:
+## Local Development (Symlink Mode)
 
-Detects migrations that already exist in the host project
+For package maintainers, Juggernaut Lab supports a **local symlink workflow** that enables real-time editing and testing.
 
-Publishes only new migrations
+### Benefits
 
-Summarizes what was added vs. already present
+- Live editing of package files
+- No modifying vendor/ files
+- Perfect for contributors improving the package
+- Ideal for multi-developer collaboration
 
-Avoids accidental duplication
+### Strict Rule
+**Do NOT commit path repositories or symlink configs.**  
+Use a local-only override file.
 
-Only overwrites existing files when you use --force
+### Step 1 — Create `composer.local.json`
+
+```
+composer.local.json
+```
+
+```json
+{
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../microservice-helper",
+            "options": { "symlink": true }
+        }
+    ]
+}
+```
+
+### Step 2 — Gitignore It
+
+```
+composer.local.json
+```
+
+### Step 3 — Install in Symlink Mode
+
+```bash
+composer update juggernaut-lab/microservice-helper
+```
+
+### Result
+
+- Maintainers work live within the package
+- Nothing leaks into Git
+- Staging/production do not use symlinks
+- Team members stick to normal Composer installs
+
+---
+
+## Migration Management
+
+Shared migrations live inside the package:
+
+```
+microservice-helper/database/migrations/
+```
+
+Publish them into the host application:
+
+```bash
+php artisan juggernaut:publish-migrations
+```
+
+### How the Publisher Works
+
+- Detects existing migrations
+- Publishes only new files
+- Protects against duplication
+- Supports `--force` for overwrites
+- Summarizes changes
 
 Example output:
-```bash
+
+```
 Total migrations in package:   1025
 Existing in project already:   1023
 Newly published migrations:    2
@@ -129,31 +180,28 @@ New migrations added:
   ✔ 2025_01_11_000000_create_invoice_table.php
 ```
 
+---
+
 ## Scaffolding System
 
-The Paddi Helper (Juggernaut) package includes a built-in scaffolding framework designed to help developers quickly generate shared components directly inside the package. These generators automate boilerplate creation and ensure consistency across contributors.
+Juggernaut Lab includes an internal scaffolding engine for generating new shared components.
 
-All generated files are written **inside the package itself**, not inside the consuming application.  
-This ensures shared logic and schema definitions remain centralized.
+All generated files are written **inside the package itself**, not inside the consuming Laravel project.
 
 ### Available Generators
-
-The scaffolding system provides the following generators:
 
 - Migration Generator
 - Class Generator
 - Enum Generator
-- Make-All Generator (migration + class + enum)
+- Full Bundle Generator (migration + class + enum)
 
-These commands streamline the process of adding new shared features, database tables, utilities, or domain logic.
+This ensures every shared artifact remains consistent and centralized.
 
 ---
 
 ## Commands
 
 ### 1. Publish Migrations
-
-Publishes all package migrations into the host application's `database/migrations` directory.
 
 ```bash
 php artisan juggernaut:publish-migrations
@@ -165,13 +213,6 @@ Force overwrite:
 php artisan juggernaut:publish-migrations --force
 ```
 
-The publisher automatically:
-
-- Detects existing migrations
-- Publishes only new ones
-- Avoids duplicates
-- Displays a summary of added and existing files
-
 ---
 
 ### 2. Generate a Migration
@@ -180,16 +221,16 @@ The publisher automatically:
 php artisan juggernaut:make-migration create_orders_table --create=orders
 ```
 
-Modify an existing table:
+Modify a table:
 
 ```bash
-php artisan juggernaut:make-migration add_wallet_column_to_users --table=users
+php artisan juggernaut:make-migration add_status_to_users --table=users
 ```
 
-Migrations are generated into:
+Generated into:
 
 ```
-paddi_helper/database/migrations/
+microservice-helper/database/migrations/
 ```
 
 ---
@@ -200,16 +241,10 @@ paddi_helper/database/migrations/
 php artisan juggernaut:make-class MoneyFormatter
 ```
 
-Optional namespace:
+With namespace:
 
 ```bash
 php artisan juggernaut:make-class TaxService --namespace=Services
-```
-
-Generated into:
-
-```
-paddi_helper/src/
 ```
 
 ---
@@ -220,12 +255,6 @@ paddi_helper/src/
 php artisan juggernaut:make-enum UserStatus
 ```
 
-Enums are stored in:
-
-```
-paddi_helper/src/Enums/
-```
-
 ---
 
 ### 5. Generate Everything (Migration + Class + Enum)
@@ -234,119 +263,36 @@ paddi_helper/src/Enums/
 php artisan juggernaut:make-all Order --create=orders
 ```
 
-Ideal for creating new business modules or domain structures.
-
----
-
-## Maintainer Symlink Mode (Local Development Only)
-
-The Paddi Helper package supports a **local-only symlink workflow** that allows contributors to develop the package while seeing instant updates inside any Laravel application.
-
-This feature is **only for package maintainers** and is never used in staging or production.
-
-### Why Symlink Mode?
-- Live editing of the package without reinstalling
-- Instant testing in a real Laravel project
-- Zero friction when building migrations, enums, helpers, and scaffolds
-- Encourages contribution from multiple developers
-
-### Important Rule
-Maintainers use symlink mode locally, but the path repository configuration must **never be committed** to the application repository.
-
-Instead, maintainers use a **local override file**:
-
-### Step 1 — Create `composer.local.json`
-
-In the Laravel app that consumes the package:
-
-```
-composer.local.json
-```
-
-```json
-{
-    "repositories": [
-        {
-            "type": "path",
-            "url": "../paddi_helper",
-            "options": { "symlink": true }
-        }
-    ]
-}
-```
-
-### Step 2 — Gitignore it
-
-Add to `.gitignore`:
-
-```
-composer.local.json
-```
-
-### Step 3 — Install the package in symlink mode
-
-```bash
-composer update gopaddi/paddi-helper
-```
-
-Composer automatically merges `composer.json` + `composer.local.json`.
-
-### Result
-
-- Maintainer gets live-symlink package development
-- No changes leak into Git
-- Staging & production remain safe
-- Team members stay on normal Composer installation
-
-This setup is fully supported by Composer and used by many large teams.
-
 ---
 
 ## Recommended Workflow
 
-This workflow ensures clean collaboration between package maintainers and microservice developers across the entire Gopaddi engineering ecosystem.
+This workflow ensures clean, safe collaboration between:
 
----
+- Package maintainers
+- Microservice developers
+- Staging & production environments
 
-### 1. Package Maintainers (Core Contributors)
+### 1. Package Maintainers
 
-Maintainers use **symlink mode** to actively develop and update the shared package.
+Use symlink mode:
 
-#### Their workflow:
-
-1. Enable symlink mode using `composer.local.json` (not committed).
-2. Make changes inside the package:
-    - Add migrations
-    - Add enums
-    - Add classes
-    - Use scaffolding commands (`juggernaut:make-*`)
-3. Publish the new package migrations into each local microservice:
-   ```bash
-   php artisan juggernaut:publish-migrations
-   ```
-4. Test everything (migrations, business logic, scaffolding).
-5. Commit changes:
-    - Commit package changes to the **package repository**.
-    - Commit published migrations to the **microservice repository**.
-6. Tag a new release (optional but recommended):
+1. Enable via `composer.local.json`
+2. Modify shared code/migrations/enums
+3. Generate components using `juggernaut:make-*`
+4. Publish updated migrations into local microservices
+5. Push package updates to GitHub
+6. Tag a release:
    ```bash
    git tag v1.1.0
    git push origin v1.1.0
    ```
-7. Notify the team or update documentation if needed.
 
-**Maintainers never commit:**
-- symlink configs
-- path repositories
-- composer.local.json
+### 2. Microservice Developers
 
----
+No symlink. No scaffolding.
 
-### 2. Normal Team Members (Consumers of the Package)
-
-Team members simply consume the package. They **never** use symlink mode or scaffolding commands.
-
-Their workflow:
+Workflow:
 
 ```bash
 git pull
@@ -354,79 +300,48 @@ composer install
 php artisan migrate
 ```
 
-Everything they need already exists because maintainers:
+### 3. Staging & Production
 
-- committed the migrations into the microservice repo
-- versioned the package update
+Never use symlink mode.
 
-No publishing needed.  
-No scaffolding needed.  
-No symlink needed.
-
----
-
-### 3. Staging & Production Servers
-
-Staging and production **never** use symlink mode.
-
-Their workflow:
+Workflow:
 
 ```bash
 composer install --no-dev
 php artisan migrate
 ```
 
-The package is downloaded normally from GitHub/Packagist.  
-No reference to local folders or symlinks.
+#### Shared DB Rule
 
-#### Shared Database Rule
-If multiple services use the same database:
-
-Only one service (the DB leader) should run migrations.
-
-Use:
+If multiple services share one DB:
 
 ```
 DB_LEADER_SERVICE=true
 ```
 
-Other services:
+Others:
 
 ```
 DB_LEADER_SERVICE=false
 ```
 
-This prevents schema corruption.
-
 ---
 
 ## Workflow Summary Table
 
-| Role | Uses Symlink? | Uses Path Repo? | Runs Scaffolding? | Publishes Migrations? | Runs Migrations? |
-|------|---------------|-----------------|--------------------|------------------------|-------------------|
-| **Package Maintainer** | YES | YES (local-only) | YES | YES | YES |
-| **Team Member** | NO | NO | NO | NO | YES |
-| **Staging** | NO | NO | NO | NO | YES (DB Leader Only) |
-| **Production** | NO | NO | NO | NO | YES (DB Leader Only) |
+| Role | Uses Symlink? | Generates Code? | Publishes Migrations? | Runs Migrations? |
+|------|---------------|------------------|------------------------|-------------------|
+| Maintainer | YES | YES | YES | YES |
+| Team Member | NO | NO | NO | YES |
+| Staging | NO | NO | NO | YES (leader only) |
+| Production | NO | NO | NO | YES (leader only) |
 
 ---
-
-This updated workflow ensures:
-
-- Safe package development
-- Zero risk to deployment environments
-- No accidental symlink in staging
-- Unified migrations across all services
-- Clean separation of maintainers and consumers
-- Zero migration duplication
-- Predictable deployments
-
-
 
 ## Project Structure
 
 ```
-paddi_helper/
+microservice-helper/
 ├── src/
 │   ├── Commands/
 │   │   ├── PublishMigrationsCommand.php
@@ -434,7 +349,7 @@ paddi_helper/
 │   │   ├── MakeClassCommand.php
 │   │   ├── MakeEnumCommand.php
 │   │   └── MakeAllCommand.php
-│   ├── SkeletonServiceProvider.php
+│   ├── MicroserviceHelperServiceProvider.php
 │   └── ...
 ├── database/
 │   └── migrations/
@@ -444,24 +359,23 @@ paddi_helper/
 └── composer.json
 ```
 
-This structure maintains modularity, clarity, and extensibility.
-
 ---
 
 ## Future Enhancements
 
-Planned improvements:
-
-- `--dry` run mode for publishing
-- Hash-based migration detection
-- JSON output mode for CI integration
+- Dry-run mode for migration publishing
+- Hash-based migration integrity checks
+- JSON output mode for CI pipelines
 - Additional scaffold types (DTOs, services, events, models)
-- Module generators (migration + enum + service + class)
-- Package diagnostics (`package:doctor`)
-- Automatic Pint formatting after generation
+- Domain module generators
+- Diagnostics tooling (`juggernaut:doctor`)
+- Automatic Pint formatting on generation
 
 ---
 
 ## Conclusion
 
-The Paddi Helper (Juggernaut) package provides a powerful and scalable shared development framework for the Gopaddi ecosystem. With internal scaffolding tools, safe migration publishing, and consistent workflows, it ensures alignment across all Laravel microservices, reduces duplication, and accelerates development across teams.
+The **Juggernaut Lab – Laravel Microservice Helper** provides a clean, scalable, team-friendly foundation for multi-service Laravel architectures.
+
+It streamlines collaboration, prevents schema drift, centralizes business logic, and gives engineering teams a predictable workflow for managing shared domain components.
+
